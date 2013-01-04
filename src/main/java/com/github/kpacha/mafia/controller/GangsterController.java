@@ -33,7 +33,7 @@ public class GangsterController {
     @RequestMapping(value = "/gangsters/{gangsterId}/toJail", method = RequestMethod.GET)
     public String sendToJail(final Model model, @PathVariable Long gangsterId) {
 	Gangster convicted = repo.findOne(gangsterId);
-	// Gangster substitutor = service.sendToJail(convicted);
+	Gangster substitutor = service.sendToJail(convicted);
 	return "redirect:/gangsters/" + gangsterId;
     }
 

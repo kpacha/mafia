@@ -1,8 +1,7 @@
-package com.github.kpacha.mafia.model;
+package com.github.kpacha.mafia.test.service;
 
 import junit.framework.Assert;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,35 +9,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.kpacha.mafia.repository.GangsterRepository;
+import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.service.GangsterService;
-import com.github.kpacha.mafia.service.PopulatorService;
+import com.github.kpacha.mafia.test.GangsterAbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "/gangster-test-context.xml" })
 @Transactional
-public class GangsterTest {
+public class GangsterServiceTest extends GangsterAbstractTest {
 
-    @Autowired
-    private GangsterRepository repo;
     @Autowired
     private GangsterService service;
-    @Autowired
-    private PopulatorService populator;
-
-    @After
-    public void cleanDb() throws InterruptedException {
-	repo.deleteAll();
-	Thread.sleep(1000);
-    }
-
-    @Test
-    @Transactional
-    public void persistedGangsterShouldBeRetrievableFromGraphDb() {
-	Gangster tonySoprano = repo.save(buildGangster());
-	Gangster retrievedGangster = repo.findOne(tonySoprano.getNodeId());
-	assertEqualGangsters(tonySoprano, retrievedGangster);
-    }
 
     @Test
     @Transactional
@@ -100,30 +81,6 @@ public class GangsterTest {
 		persitedTonySoprano,
 		repo.findOne(persitedPaulie.getBosses().iterator().next()
 			.getNodeId()));
-    }
-
-    private Gangster buildGangster() {
-	return populator.buildGangster(0, 0, 0);
-    }
-
-    private void assertEqualGangsters(Gangster expected, Gangster actual) {
-	assertEqualPerson(expected, actual);
-	Assert.assertEquals(expected.isOnDuty(), actual.isOnDuty());
-
-	Assert.assertEquals(expected.getBosses().size(), actual.getBosses()
-		.size());
-	Assert.assertEquals(expected.getSubordinates().size(), actual
-		.getSubordinates().size());
-
-	Assert.assertEquals(expected.getManagers().size(), actual.getManagers()
-		.size());
-	Assert.assertEquals(expected.getManaged().size(), actual.getManaged()
-		.size());
-    }
-
-    private void assertEqualPerson(Person expected, Person actual) {
-	Assert.assertEquals(expected.getComment(), actual.getComment());
-	Assert.assertEquals(expected.getName(), actual.getName());
     }
 
 }
