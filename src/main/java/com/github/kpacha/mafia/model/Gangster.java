@@ -20,12 +20,30 @@ public class Gangster extends Person {
     Set<Gangster> bosses = new HashSet<Gangster>();
     @RelatedTo(type = "MANAGES", direction = Direction.OUTGOING)
     Set<Gangster> subordinates = new HashSet<Gangster>();
+    @RelatedTo(type = "KNOWS", direction = Direction.BOTH)
+    Set<Gangster> known = new HashSet<Gangster>();
     @Fetch
     @RelatedToVia(type = "MANAGES", direction = Direction.INCOMING)
     Set<Manager> managers = new HashSet<Manager>();
     @Fetch
     @RelatedToVia(type = "MANAGES", direction = Direction.OUTGOING)
     Set<Manager> managed = new HashSet<Manager>();
+
+    /**
+     * @param known
+     *            the known gangster to add
+     */
+    public void addKnown(Gangster known) {
+	this.known.add(known);
+    }
+
+    /**
+     * @param known
+     *            the known gangsters to add
+     */
+    public void addKnown(Collection<Gangster> known) {
+	this.known.addAll(known);
+    }
 
     /**
      * @return the nodeId
@@ -35,7 +53,7 @@ public class Gangster extends Person {
     }
 
     /**
-     * @return the onDutty
+     * @return the onDuty
      */
     public boolean isOnDuty() {
 	return onDuty;
@@ -53,6 +71,13 @@ public class Gangster extends Person {
      */
     public Set<Gangster> getSubordinates() {
 	return subordinates;
+    }
+
+    /**
+     * @return the known
+     */
+    public Set<Gangster> getKnown() {
+	return known;
     }
 
     /**
@@ -79,7 +104,7 @@ public class Gangster extends Person {
 
     /**
      * @param onDuty
-     *            the onDutty to set
+     *            the onDuty to set
      */
     public void setOnDuty(boolean onDuty) {
 	this.onDuty = onDuty;
@@ -116,4 +141,5 @@ public class Gangster extends Person {
     public void setManaged(Collection<Manager> managed) {
 	this.managed = new HashSet<Manager>(managed);
     }
+
 }

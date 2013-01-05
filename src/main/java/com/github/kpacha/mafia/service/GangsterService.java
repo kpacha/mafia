@@ -38,6 +38,7 @@ public class GangsterService {
 	Set<Manager> managed = boss.getManaged();
 	managed.add(buildManager(boss, subordinate, true));
 	boss.setManaged(managed);
+	boss.addKnown(subordinate);
 	log.debug("Final managed size: " + boss.getManaged().size());
 	return boss;
     }
