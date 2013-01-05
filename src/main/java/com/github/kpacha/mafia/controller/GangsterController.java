@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.service.GangsterService;
-import com.github.kpacha.mafia.service.PopulatorService;
 
 @Controller
 public class GangsterController {
@@ -25,8 +24,6 @@ public class GangsterController {
 
     @Autowired
     private GangsterService service;
-    @Autowired
-    private PopulatorService populator;
 
     @RequestMapping(value = "/gangsters/{gangsterId}/toJail", method = RequestMethod.GET)
     public String sendToJail(final Model model, @PathVariable Long gangsterId) {
@@ -97,22 +94,5 @@ public class GangsterController {
 	}
 	model.addAttribute("query", query);
 	return "/gangsters/list";
-    }
-
-    @RequestMapping(value = "/populate/{deep}", method = RequestMethod.GET)
-    public String populateByParam(Model model, @PathVariable int deep) {
-	return doPopulate(model, deep);
-    }
-
-    @RequestMapping(value = "/populate", method = RequestMethod.GET)
-    public String populate(Model model) {
-	return doPopulate(model, 3);
-    }
-
-    private String doPopulate(Model model, int deep) {
-	log.info("Populating the db with deep=" + deep);
-	int gangSize = populator.populate(deep);
-	log.info("Created " + gangSize + " instances");
-	return "forward:/search/sample";
     }
 }
