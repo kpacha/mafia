@@ -20,9 +20,9 @@ public interface GangsterRepository extends GraphRepository<Gangster>,
     @Query("start gangster=node({0}) match gangster<-[r:MANAGES]-boss where boss.onDuty = true return boss")
     Set<Gangster> getCurrentBoss(Gangster gangster);
 
-    @Query("start gangster=node({0}) match gangster-[r:MANAGES]->subordinate where subordinate.onDuty = true and r.onDuty = true return subordinate order by r.createdAt")
+    @Query("start gangster=node({0}) match gangster-[r:MANAGES]->subordinate where subordinate.onDuty = true return subordinate order by r.createdAt")
     Set<Gangster> getActiveSubordinates(Gangster gangster);
 
-    @Query("start gangster=node({0}) match gangster<-[:MANAGES]-boss-[r:MANAGES]->collegue where boss.onDuty = true and collegue.onDuty = true and r.onDuty = true return collegue order by r.createdAt")
+    @Query("start gangster=node({0}) match gangster<-[:MANAGES]-boss-[r:MANAGES]->collegue where boss.onDuty = true and collegue.onDuty = true return collegue order by r.createdAt")
     Set<Gangster> getActiveCollegues(Gangster gangster);
 }

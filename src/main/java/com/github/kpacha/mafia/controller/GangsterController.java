@@ -32,8 +32,15 @@ public class GangsterController {
 
     @RequestMapping(value = "/gangsters/{gangsterId}/toJail", method = RequestMethod.GET)
     public String sendToJail(final Model model, @PathVariable Long gangsterId) {
-	Gangster convicted = repo.findOne(gangsterId);
-	Gangster substitutor = service.sendToJail(convicted);
+	Gangster substitutor = service.sendToJail(repo.findOne(gangsterId));
+	log.debug("Substitutor [" + substitutor + "] with "
+		+ substitutor.getManaged().size() + " subordinates saved");
+	return "redirect:/gangsters/" + gangsterId;
+    }
+
+    @RequestMapping(value = "/gangsters/{gangsterId}/release", method = RequestMethod.GET)
+    public String release(final Model model, @PathVariable Long gangsterId) {
+	service.release(repo.findOne(gangsterId));
 	return "redirect:/gangsters/" + gangsterId;
     }
 
