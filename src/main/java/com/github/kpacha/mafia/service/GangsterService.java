@@ -184,7 +184,8 @@ public class GangsterService {
 	return candidate;
     }
 
-    private Gangster getBoss(Gangster gangster) {
+    @Transactional(readOnly = true)
+    public Gangster getBoss(Gangster gangster) {
 	Gangster boss = null;
 	Set<Gangster> bosses = repo.getCurrentBoss(gangster);
 	if (!bosses.isEmpty()) {
