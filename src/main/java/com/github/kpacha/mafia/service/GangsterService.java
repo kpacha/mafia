@@ -194,6 +194,16 @@ public class GangsterService {
 	return boss;
     }
 
+    @Transactional(readOnly = true)
+    public Integer getLevel(Gangster gangster) {
+	Integer level = null;
+	Set<Integer> result = repo.getLevel(gangster);
+	if (!result.isEmpty()) {
+	    level = (Integer) result.iterator().next();
+	}
+	return level;
+    }
+
     private Manager buildManager(Gangster boss, Gangster subordinate,
 	    boolean onDuty) {
 	Manager manager = new Manager();
