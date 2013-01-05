@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.model.Manager;
+import com.github.kpacha.mafia.model.Place;
+import com.github.kpacha.mafia.model.Visit;
 import com.github.kpacha.mafia.repository.GangsterRepository;
 import com.github.kpacha.mafia.service.GangsterService;
 
@@ -46,6 +48,16 @@ public class GangsterServiceImpl implements GangsterService {
     @Transactional(readOnly = true)
     public Page<Gangster> findByNameLike(String query, Pageable pageable) {
 	return repo.findByNameLike(query, pageable);
+    }
+
+    @Override
+    public Gangster save(Gangster gangster) {
+	return repo.save(gangster);
+    }
+
+    @Override
+    public void deleteAll() {
+	repo.deleteAll();
     }
 
     public Gangster enroleSubordinate(final Gangster boss,
@@ -240,5 +252,15 @@ public class GangsterServiceImpl implements GangsterService {
 	manager.setCreatedAt(new Date());
 	manager.setOnDuty(onDuty);
 	return manager;
+    }
+
+    public void visit(Gangster visitor, Place place) {
+	Visit visit = repo.createRelationshipBetween(visitor, place,
+		Visit.class, "VISIT");
+	visit.setVisitedAt(new Date());
+	Set<Visit> visites = visitor.getVisites();
+	visites.add(visit);
+	visitor.setVisites(visites);
+	repo.save(visitor);
     }
 }
