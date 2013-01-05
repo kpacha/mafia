@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.kpacha.mafia.model.Gangster;
-import com.github.kpacha.mafia.service.impl.GangsterServiceImpl;
+import com.github.kpacha.mafia.service.GangsterService;
 import com.github.kpacha.mafia.test.GangsterAbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,7 +19,7 @@ import com.github.kpacha.mafia.test.GangsterAbstractTest;
 public class GangsterServiceTest extends GangsterAbstractTest {
 
     @Autowired
-    private GangsterServiceImpl service;
+    private GangsterService service;
 
     @Test
     @Transactional
