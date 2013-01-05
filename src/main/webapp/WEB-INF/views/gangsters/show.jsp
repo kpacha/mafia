@@ -16,6 +16,7 @@
 				</c:otherwise>
 			</c:choose>
 			<div>Level: ${level}</div>
+			<div>Total subordinates: ${totalSubordinates}</div>
 			<hr/>
 			<c:if test="${not empty gangster.managers}">
 				<h3>Managers</h3>

@@ -54,6 +54,8 @@ public class GangsterController {
 	    model.addAttribute("gangster", gangster);
 	    model.addAttribute("boss", service.getBoss(gangster));
 	    model.addAttribute("level", service.getLevel(gangster));
+	    model.addAttribute("totalSubordinates",
+		    service.countAllSubordinates(gangster));
 	}
 	return "/gangsters/show";
     }
