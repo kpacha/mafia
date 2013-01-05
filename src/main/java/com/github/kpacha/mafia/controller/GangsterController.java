@@ -52,8 +52,8 @@ public class GangsterController {
 	model.addAttribute("id", gangsterId);
 	if (gangster != null) {
 	    model.addAttribute("gangster", gangster);
-	    model.addAttribute("bosses", gangster.getBosses());
-	    model.addAttribute("subordinates", gangster.getSubordinates());
+	    model.addAttribute("boss", service.getBoss(gangster));
+	    model.addAttribute("level", service.getLevel(gangster));
 	}
 	return "/gangsters/show";
     }

@@ -4,8 +4,18 @@
 <c:choose>
 	<c:when test="${not empty gangster}">
 			<h2>${gangster.name}</h2>
-			<div>${gangster.comment}</div>
-			<div>on duty: ${gangster.onDuty}</div>
+			<div>Comment: ${gangster.comment}</div>
+			<div>Is on duty: ${gangster.onDuty}</div>
+			<div>Knows [${gangster.known.size()}] other members (directly)</div>
+			<c:choose>
+				<c:when test="${not empty boss}">
+				<div>Current boss: [${boss.nodeId}] - ${boss.name}</div>
+				</c:when>
+				<c:otherwise>
+					<div>Without known bosses!</div>
+				</c:otherwise>
+			</c:choose>
+			<div>Level: ${level}</div>
 			<hr/>
 			<c:if test="${not empty gangster.managers}">
 				<h3>Managers</h3>

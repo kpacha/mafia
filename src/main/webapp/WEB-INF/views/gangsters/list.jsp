@@ -3,7 +3,7 @@
 <div>
 	<h3>Search gangsters</h3>
 	<form action="<c:url value="/search/"/>" method="POST">
-		<input type="text" name="query" /> <input type="submit" />
+		<input type="text" name="query" value="${query}"/> <input type="submit" />
 	</form>
 </div>
 <hr />
