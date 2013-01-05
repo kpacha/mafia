@@ -111,9 +111,9 @@ public class GangsterController {
     }
 
     private String doPopulate(Model model, int deep) {
-	log.info("populating the db with deep=" + deep);
-	System.out
-		.println("Created " + populator.populate(deep) + " instances");
+	log.info("Populating the db with deep=" + deep);
+	int gangSize = populator.populate(deep);
+	log.info("Created " + gangSize + " instances");
 	return "forward:/search/sample";
     }
 }
