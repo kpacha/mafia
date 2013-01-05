@@ -52,9 +52,10 @@ public interface GangsterRepository extends GraphRepository<Gangster>,
     Set<Integer> getLevel(Gangster gangster, int deep);
 
     @Query("start gangster=node({0}) match gangster-[:MANAGES*1.."
-	    + DEFAULT_DEEP + "]->subordinate return count(subordinate)")
+	    + DEFAULT_DEEP
+	    + "]->subordinate return count(distinct subordinate)")
     Set<Integer> countAllSubordinates(Gangster gangster);
 
-    @Query("start gangster=node({0}) match gangster-[:MANAGES*1..{1}]->subordinate return count(subordinate)")
+    @Query("start gangster=node({0}) match gangster-[:MANAGES*1..{1}]->subordinate return count(distinct subordinate)")
     Set<Integer> countAllSubordinates(Gangster gangster, int deep);
 }
