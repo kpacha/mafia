@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.kpacha.mafia.model.Gangster;
-import com.github.kpacha.mafia.repository.GangsterRepository;
+import com.github.kpacha.mafia.model.Place;
 import com.github.kpacha.mafia.service.GangsterService;
+import com.github.kpacha.mafia.service.PlaceService;
 import com.github.kpacha.mafia.service.PopulatorService;
 
 @Service
@@ -21,9 +22,9 @@ public class PopulatorServiceImpl implements PopulatorService {
 	    .getLogger(PopulatorServiceImpl.class);
 
     @Autowired
-    private GangsterRepository repo;
+    private GangsterService gangsterService;
     @Autowired
-    private GangsterService service;
+    private PlaceService placeService;
 
     private Random random = new Random();
 
@@ -31,7 +32,7 @@ public class PopulatorServiceImpl implements PopulatorService {
 
     public int populate(final int deep) {
 	log.debug("Populating with deep: " + deep);
-	repo.deleteAll();
+	gangsterService.deleteAll();
 	totalCreatedGangsters = 0;
 	Gangster superboss = buildGangster(deep, 0, deep);
 
@@ -49,7 +50,7 @@ public class PopulatorServiceImpl implements PopulatorService {
 		+ " subordinates and his level is " + level);
 	gangster.setOnDuty(true);
 	totalCreatedGangsters++;
-	gangster = repo.save(gangster);
+	gangster = gangsterService.save(gangster);
 	log.debug("Building a gangster with maxSubordinates: "
 		+ maxSubordinates + ", level: " + level + ", deep: " + deep
 		+ ", nodeId: " + gangster.getNodeId());
@@ -58,14 +59,21 @@ public class PopulatorServiceImpl implements PopulatorService {
 	    for (int i = 0; i < maxSubordinates; i++) {
 		Gangster subordinate = buildGangster(maxSubordinates + level,
 			level + 1, deep - 1);
-		gangster = service.enroleSubordinate(gangster, subordinate);
+		gangster = gangsterService.enroleSubordinate(gangster,
+			subordinate);
 	    }
 	    if (maxSubordinates > 0) {
-		repo.save(gangster);
+		gangsterService.save(gangster);
 	    }
 	}
 
 	log.debug("Builded [" + gangster + "]");
 	return gangster;
+    }
+
+    public Place buildPlace(float lon, float lat) {
+	Place place = new Place();
+	place.setLocation(lon, lat);
+	return placeService.save(place);
     }
 }
