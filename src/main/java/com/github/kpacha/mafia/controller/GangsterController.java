@@ -67,7 +67,7 @@ public class GangsterController {
     }
 
     private Model doList(Model model, int page) {
-	Page<Gangster> gangsters = service.findAll(new PageRequest(0, 20));
+	Page<Gangster> gangsters = service.findAll(new PageRequest(page, 20));
 	model.addAttribute("gangsters", gangsters.getContent());
 	model.addAttribute("page", page);
 	return model;

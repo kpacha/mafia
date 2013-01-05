@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.github.kpacha.mafia.service.PopulatorService;
 
 @Controller
-@RequestMapping("/populate")
 public class PopulatorController {
     private static final Logger log = LoggerFactory
 	    .getLogger(PopulatorController.class);
@@ -19,11 +18,12 @@ public class PopulatorController {
     @Autowired
     private PopulatorService populator;
 
-    @RequestMapping("/{deep}")
+    @RequestMapping("/populate/{deep}")
     public String populateByParam(Model model, @PathVariable int deep) {
 	return doPopulate(model, deep);
     }
 
+    @RequestMapping("/populate")
     public String populate(Model model) {
 	return doPopulate(model, 3);
     }
