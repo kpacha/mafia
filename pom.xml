@@ -16,6 +16,7 @@
 		<!-- <spring-data-neo4j.version>2.1.0.RELEASE</spring-data-neo4j.version> -->
 		<spring-data-neo4j.version>2.1.0.RC4</spring-data-neo4j.version>
 		<!-- <spring-data-neo4j.version>2.1.0.BUILD-SNAPSHOT</spring-data-neo4j.version> -->
+    	<neo4j.spatial.version>0.9</neo4j.spatial.version>
 		<aspectj.version>1.6.12</aspectj.version>
 	</properties>
 	<repositories>
@@ -213,6 +214,11 @@
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j-cypher</artifactId>
 			<version>${neo4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-spatial</artifactId>
+			<version>${neo4j.spatial.version}</version>
 		</dependency>
 
 		<!-- Junit -->
