@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.model.Person;
 import com.github.kpacha.mafia.repository.GangsterRepository;
-import com.github.kpacha.mafia.service.PopulatorService;
+import com.github.kpacha.mafia.service.impl.PopulatorService;
 
 public class GangsterAbstractTest {
     @Autowired

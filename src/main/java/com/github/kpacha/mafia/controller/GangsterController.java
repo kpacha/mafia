@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.kpacha.mafia.model.Gangster;
-import com.github.kpacha.mafia.repository.GangsterRepository;
 import com.github.kpacha.mafia.service.GangsterService;
-import com.github.kpacha.mafia.service.PopulatorService;
+import com.github.kpacha.mafia.service.impl.PopulatorService;
 
 @Controller
 public class GangsterController {
@@ -25,15 +24,13 @@ public class GangsterController {
 	    .getLogger(GangsterController.class);
 
     @Autowired
-    private GangsterRepository repo;
-    @Autowired
     private GangsterService service;
     @Autowired
     private PopulatorService populator;
 
     @RequestMapping(value = "/gangsters/{gangsterId}/toJail", method = RequestMethod.GET)
     public String sendToJail(final Model model, @PathVariable Long gangsterId) {
-	Gangster substitutor = service.sendToJail(repo.findOne(gangsterId));
+	Gangster substitutor = service.sendToJail(service.find(gangsterId));
 	log.debug("Substitutor [" + substitutor + "] with "
 		+ substitutor.getManaged().size() + " subordinates saved");
 	return "redirect:/gangsters/" + gangsterId;
@@ -41,14 +38,14 @@ public class GangsterController {
 
     @RequestMapping(value = "/gangsters/{gangsterId}/release", method = RequestMethod.GET)
     public String release(final Model model, @PathVariable Long gangsterId) {
-	service.release(repo.findOne(gangsterId));
+	service.release(service.find(gangsterId));
 	return "redirect:/gangsters/" + gangsterId;
     }
 
     @RequestMapping(value = "/gangsters/{gangsterId}", method = RequestMethod.GET)
     public String singleGangsterView(final Model model,
 	    @PathVariable Long gangsterId) {
-	Gangster gangster = repo.findOne(gangsterId);
+	Gangster gangster = service.find(gangsterId);
 	model.addAttribute("id", gangsterId);
 	if (gangster != null) {
 	    model.addAttribute("gangster", gangster);
@@ -73,7 +70,7 @@ public class GangsterController {
     }
 
     private Model doList(Model model, int page) {
-	Page<Gangster> gangsters = repo.findAll(new PageRequest(0, 20));
+	Page<Gangster> gangsters = service.findAll(new PageRequest(0, 20));
 	model.addAttribute("gangsters", gangsters.getContent());
 	model.addAttribute("page", page);
 	return model;
@@ -92,7 +89,7 @@ public class GangsterController {
     private String doFindGangsters(Model model, String query) {
 	log.info("received search query : " + query);
 	if (query != null && !query.isEmpty()) {
-	    Page<Gangster> gangsters = repo.findByNameLike(query,
+	    Page<Gangster> gangsters = service.findByNameLike(query,
 		    new PageRequest(0, 20));
 	    model.addAttribute("gangsters", gangsters.getContent());
 	} else {

@@ -1,4 +1,4 @@
-package com.github.kpacha.mafia.service;
+package com.github.kpacha.mafia.service.impl;
 
 import java.util.Random;
 
@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.repository.GangsterRepository;
+import com.github.kpacha.mafia.service.GangsterService;
 
 @Service
 @Transactional

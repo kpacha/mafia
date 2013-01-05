@@ -1,4 +1,4 @@
-package com.github.kpacha.mafia.service;
+package com.github.kpacha.mafia.service.impl;
 
 import java.util.Collection;
 import java.util.Date;
@@ -9,6 +9,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,19 +18,35 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.model.Manager;
 import com.github.kpacha.mafia.repository.GangsterRepository;
+import com.github.kpacha.mafia.service.GangsterService;
 
 @Service
 @Transactional
-public class GangsterService {
+public class GangsterServiceImpl implements GangsterService {
 
     private static final Logger log = LoggerFactory
-	    .getLogger(GangsterService.class);
+	    .getLogger(GangsterServiceImpl.class);
 
     @Autowired
     private GangsterRepository repo;
 
     @Autowired
     private Neo4jOperations template;
+
+    @Transactional(readOnly = true)
+    public Gangster find(Long gangsterId) {
+	return repo.findOne(gangsterId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Gangster> findAll(Pageable pageable) {
+	return repo.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Gangster> findByNameLike(String query, Pageable pageable) {
+	return repo.findByNameLike(query, pageable);
+    }
 
     public Gangster enroleSubordinate(final Gangster boss,
 	    final Gangster subordinate) {
