@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.repository.GangsterRepository;
@@ -77,7 +78,16 @@ public class GangsterController {
     }
 
     @RequestMapping(value = "/search/{query}", method = RequestMethod.GET)
-    public String findGangsters(Model model, @PathVariable String query) {
+    public String findGangstersFromUrl(Model model, @PathVariable String query) {
+	return doFindGangsters(model, query);
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String findGangsters(Model model, @RequestParam("query") String query) {
+	return doFindGangsters(model, query);
+    }
+
+    private String doFindGangsters(Model model, String query) {
 	log.info("received search query : " + query);
 	if (query != null && !query.isEmpty()) {
 	    Page<Gangster> gangsters = repo.findByNameLike(query,
