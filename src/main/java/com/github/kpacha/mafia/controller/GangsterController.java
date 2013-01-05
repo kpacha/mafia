@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.service.GangsterService;
-import com.github.kpacha.mafia.service.impl.PopulatorService;
+import com.github.kpacha.mafia.service.PopulatorService;
 
 @Controller
 public class GangsterController {

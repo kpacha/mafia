@@ -11,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.repository.GangsterRepository;
 import com.github.kpacha.mafia.service.GangsterService;
+import com.github.kpacha.mafia.service.PopulatorService;
 
 @Service
 @Transactional
-public class PopulatorService {
+public class PopulatorServiceImpl implements PopulatorService {
 
     private static final Logger log = LoggerFactory
-	    .getLogger(PopulatorService.class);
+	    .getLogger(PopulatorServiceImpl.class);
 
     @Autowired
     private GangsterRepository repo;
