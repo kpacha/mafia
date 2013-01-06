@@ -30,7 +30,7 @@ public class PlaceServiceTest extends PlaceAbstractTest {
     private Place badaBing;
 
     @Before
-    public void setUp() {
+    public void setUp() throws InterruptedException {
 	badaBing = repo.save(buildPlace(BADABING_LON, BADABING_LAT));
     }
 

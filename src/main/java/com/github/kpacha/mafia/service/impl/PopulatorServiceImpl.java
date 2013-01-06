@@ -79,6 +79,7 @@ public class PopulatorServiceImpl implements PopulatorService {
     public Place buildPlace(float lon, float lat) {
 	Place place = new Place();
 	place.setLocation(lon, lat);
+	place.setName("Place @" + place.getWkt());
 	return placeService.save(place);
     }
 }

@@ -31,9 +31,8 @@ public class GangsterServiceTest extends GangsterAbstractTest {
 	Gangster tonySoprano = buildGangster();
 	Gangster persitedTonySoprano = repo.save(tonySoprano);
 
-	service.enroleSubordinate(persitedTonySoprano, persitedPaulie);
-
-	persitedTonySoprano = repo.findOne(persitedTonySoprano.getNodeId());
+	persitedTonySoprano = service.save(service.enroleSubordinate(
+		persitedTonySoprano, persitedPaulie));
 	// new entities had been added to the related collections
 	Assert.assertEquals(tonySoprano.getManaged().size() + 1,
 		persitedTonySoprano.getManaged().size());
@@ -62,7 +61,8 @@ public class GangsterServiceTest extends GangsterAbstractTest {
 	Gangster tonySoprano = buildGangster();
 	Gangster persitedTonySoprano = repo.save(tonySoprano);
 
-	service.enroleSubordinate(persitedTonySoprano, persitedPaulie);
+	persitedTonySoprano = service.save(service.enroleSubordinate(
+		persitedTonySoprano, persitedPaulie));
 
 	persitedPaulie = repo.findOne(persitedPaulie.getNodeId());
 	// new entities had been added to the related collections
@@ -72,7 +72,6 @@ public class GangsterServiceTest extends GangsterAbstractTest {
 		.getBosses().size());
 
 	// the boss is accessible throught the rellated collections
-	persitedTonySoprano = repo.findOne(persitedTonySoprano.getNodeId());
 	assertEqualGangsters(
 		persitedTonySoprano,
 		repo.findOne(persitedPaulie.getManagers().iterator().next()

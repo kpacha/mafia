@@ -27,7 +27,7 @@ public class GangsterRepositoryTest extends GangsterAbstractTest {
     private Gangster soldier;
 
     @Before
-    public void setUpTest() {
+    public void setUp() throws InterruptedException {
 	tonySoprano = buildGangster();
 	paulie = buildGangster();
 	soldier = buildGangster();
@@ -90,7 +90,7 @@ public class GangsterRepositoryTest extends GangsterAbstractTest {
 
 	soldier = repo.save(soldier);
 
-	Set<Gangster> bosses = repo.getActiveSubordinates(soldier);
+	Set<Gangster> bosses = repo.getCurrentBoss(soldier);
 
 	Assert.assertEquals(1, bosses.size());
 	Assert.assertEquals(tonySoprano.getNodeId(), bosses.iterator().next()
