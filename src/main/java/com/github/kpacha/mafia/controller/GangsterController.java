@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.service.GangsterService;
+import com.github.kpacha.mafia.service.PlaceService;
 
 @Controller
 public class GangsterController {
@@ -25,11 +26,24 @@ public class GangsterController {
     @Autowired
     private GangsterService service;
 
+    @Autowired
+    private PlaceService placeService;
+
     @RequestMapping(value = "/gangsters/{gangsterId}/toJail", method = RequestMethod.GET)
     public String sendToJail(final Model model, @PathVariable Long gangsterId) {
 	Gangster substitutor = service.sendToJail(service.find(gangsterId));
 	log.debug("Substitutor [" + substitutor + "] with "
 		+ substitutor.getManaged().size() + " subordinates saved");
+	return "redirect:/gangsters/" + gangsterId;
+    }
+
+    @RequestMapping(value = "/gangsters/{gangsterId}/visit/{lon}/{lat}/", method = RequestMethod.GET)
+    public String saveVisit(final Model model, @PathVariable Long gangsterId,
+	    @PathVariable float lon, @PathVariable float lat) {
+	// Gangster gangster = service.find(gangsterId);
+	// log.debug("Gangster [" + gangster.getNodeId() + "] is visiting "
+	// + place.getWkt() + " [" + place.getName() + "] now!");
+	placeService.visit(gangsterId, lon, lat);
 	return "redirect:/gangsters/" + gangsterId;
     }
 
