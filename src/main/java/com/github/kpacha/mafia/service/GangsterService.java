@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.github.kpacha.mafia.model.Gangster;
-import com.github.kpacha.mafia.model.Place;
 
 public interface GangsterService {
 
@@ -27,8 +26,6 @@ public interface GangsterService {
     public Integer getLevel(Gangster gangster);
 
     public Integer countAllSubordinates(Gangster gangster);
-
-    public void visit(Gangster visitor, Place place);
 
     public Gangster save(Gangster gangster);
 
