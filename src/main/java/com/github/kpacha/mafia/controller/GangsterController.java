@@ -64,6 +64,8 @@ public class GangsterController {
 	    model.addAttribute("level", service.getLevel(gangster));
 	    model.addAttribute("totalSubordinates",
 		    service.countAllSubordinates(gangster));
+	    model.addAttribute("mostVisitedPlaces",
+		    placeService.getMostVisitedPlaces(gangster));
 	}
 	return "/gangsters/show";
     }

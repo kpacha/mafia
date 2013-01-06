@@ -1,6 +1,7 @@
 package com.github.kpacha.mafia.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.github.kpacha.mafia.model.Gangster;
+import com.github.kpacha.mafia.model.MostVisitedResult;
 import com.github.kpacha.mafia.model.Place;
 import com.github.kpacha.mafia.model.Visit;
 import com.github.kpacha.mafia.repository.PlaceRepository;
@@ -44,6 +46,8 @@ public class PlaceServiceImpl implements PlaceService {
 	Place place = candidatePlace.singleOrNull();
 	if (place == null) {
 	    place = save(buildNewPlace(lon, lat));
+	    log.debug("Created place [" + place.getId() + "/" + place.getName()
+		    + "] " + place.getWkt());
 	}
 	return place;
     }
@@ -69,6 +73,8 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Visit visit(Gangster visitor, Place place) {
+	Assert.notNull(visitor);
+	Assert.notNull(place);
 	log.debug("Visiting the place [" + place.getId() + "] "
 		+ place.getName());
 	Visit visit = new Visit();
@@ -81,7 +87,14 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Place save(Place place) {
+	Assert.notNull(place);
 	return repo.save(place);
+    }
+
+    @Override
+    public List<MostVisitedResult> getMostVisitedPlaces(Gangster visitor) {
+	Assert.notNull(visitor);
+	return repo.getMostVisitedPlaces(visitor);
     }
 
 }

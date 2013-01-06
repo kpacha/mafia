@@ -41,6 +41,14 @@
 				</ul>
 			</c:if>
 			<hr/>
+			<c:if test="${not empty mostVisitedPlaces}">
+				<h3>Visited places</h3>
+				<ul>
+					<c:forEach items="${mostVisitedPlaces}" var="result">
+						<li>${result.visits} - ${entry.place.name}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
 	</c:when>
 	<c:otherwise>
 		<div>No gangsters found matching [${id}]!</div>
