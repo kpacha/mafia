@@ -166,6 +166,8 @@ public class GangsterServiceImpl implements GangsterService {
 		+ "] has " + candidate.getManaged().size() + " subordinates");
 	Gangster substitutor = repo.save(endoseSubordinates(convicted,
 		candidate, subordinates));
+	substitutor.addKnown(subordinates);
+	substitutor = repo.save(substitutor);
 	log.debug("After the endorsement, the substitutor [" + candidate
 		+ "] has " + substitutor.getManaged().size() + " subordinates");
 	// if the candidate was a subordinate, promote him
@@ -175,7 +177,9 @@ public class GangsterServiceImpl implements GangsterService {
 		&& boss != null) {
 	    log.debug("The substitutor [" + substitutor
 		    + "] was a subordinate. Promoting him!");
-	    repo.save(enroleSubordinate(boss, substitutor));
+	    boss = repo.save(enroleSubordinate(boss, substitutor));
+	    boss.addKnown(substitutor);
+	    boss = repo.save(boss);
 	}
 	return substitutor;
     }

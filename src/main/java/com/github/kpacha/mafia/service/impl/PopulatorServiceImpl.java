@@ -1,6 +1,8 @@
 package com.github.kpacha.mafia.service.impl;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,14 +58,17 @@ public class PopulatorServiceImpl implements PopulatorService {
 		+ ", nodeId: " + gangster.getNodeId());
 
 	if (deep > 0) {
+	    Set<Gangster> subordinates = new HashSet<Gangster>();
 	    for (int i = 0; i < maxSubordinates; i++) {
 		Gangster subordinate = buildGangster(maxSubordinates + level,
 			level + 1, deep - 1);
 		gangster = gangsterService.enroleSubordinate(gangster,
 			subordinate);
+		subordinates.add(subordinate);
 	    }
 	    if (maxSubordinates > 0) {
-		gangsterService.save(gangster);
+		gangster = gangsterService.save(gangster);
+		gangster.addKnown(subordinates);
 	    }
 	}
 
