@@ -10,6 +10,10 @@ public interface PlaceService {
 
     public Place save(Place place);
 
-    public Visit visit(Gangster gangster, Place place);
+    public Visit visit(Gangster visitor, Place place);
+
+    public Visit visit(Long visitorId, Place place);
+
+    public Visit visit(Long visitorId, float lon, float lat);
 
 }

@@ -10,7 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.model.Place;
+import com.github.kpacha.mafia.model.Visit;
 import com.github.kpacha.mafia.service.PlaceService;
 import com.github.kpacha.mafia.test.PlaceAbstractTest;
 
@@ -55,6 +57,17 @@ public class PlaceServiceTest extends PlaceAbstractTest {
 	Place receivedPlace = service
 		.getPlace(BADABING_LON + 100, BADABING_LAT);
 	Assert.assertFalse(badaBing.getWkt().equals(receivedPlace.getWkt()));
+    }
+
+    @Test
+    @Transactional
+    public void theVisitMethodCreatesAVisitRelationship() {
+	Gangster tonySoprano = buildGangster();
+	Visit visit = service.visit(tonySoprano, badaBing);
+	Assert.assertEquals(badaBing.getId(), visit.getPlace().getId());
+	Assert.assertEquals(tonySoprano.getNodeId(),
+		((Gangster) (visit.getVisitor())).getNodeId());
+	Assert.assertNotNull(visit.getId());
     }
 
 }

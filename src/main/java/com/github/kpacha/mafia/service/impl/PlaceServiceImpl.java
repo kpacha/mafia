@@ -9,11 +9,13 @@ import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.model.Place;
 import com.github.kpacha.mafia.model.Visit;
 import com.github.kpacha.mafia.repository.PlaceRepository;
+import com.github.kpacha.mafia.service.GangsterService;
 import com.github.kpacha.mafia.service.PlaceService;
 
 @Service
@@ -27,9 +29,10 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Autowired
     private PlaceRepository repo;
-
     @Autowired
     private Neo4jOperations template;
+    @Autowired
+    private GangsterService gangsterService;
 
     @Override
     public Place getPlace(float lon, float lat) {
@@ -40,7 +43,7 @@ public class PlaceServiceImpl implements PlaceService {
 			+ COORDINATE_TOLERANCE);
 	Place place = candidatePlace.singleOrNull();
 	if (place == null) {
-	    place = buildNewPlace(lon, lat);
+	    place = save(buildNewPlace(lon, lat));
 	}
 	return place;
     }
@@ -53,16 +56,27 @@ public class PlaceServiceImpl implements PlaceService {
 	return place;
     }
 
+    @Override
+    public Visit visit(Long visitorId, float lon, float lat) {
+	return visit(visitorId, getPlace(lon, lat));
+    }
+
+    @Override
+    public Visit visit(Long visitorId, Place place) {
+	Assert.notNull(place);
+	return visit(gangsterService.find(visitorId), place);
+    }
+
+    @Override
     public Visit visit(Gangster visitor, Place place) {
-	log.debug("Visiting the place " + place.getWkt());
+	log.debug("Visiting the place [" + place.getId() + "] "
+		+ place.getName());
 	Visit visit = new Visit();
 	visit.setVisitor(visitor);
 	visit.setPlace(place);
 	visit.setVisitedAt(new Date());
 	visit.setReason("Place " + place.getWkt() + " is visited by " + visitor);
-	place.addVisit(visit);
-	repo.save(place);
-	return visit;
+	return template.save(visit);
     }
 
     @Override
