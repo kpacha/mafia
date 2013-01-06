@@ -16,7 +16,7 @@
 		<!-- <spring-data-neo4j.version>2.1.0.RELEASE</spring-data-neo4j.version> -->
 		<spring-data-neo4j.version>2.1.0.RC4</spring-data-neo4j.version>
 		<!-- <spring-data-neo4j.version>2.1.0.BUILD-SNAPSHOT</spring-data-neo4j.version> -->
-    	<neo4j.spatial.version>0.9</neo4j.spatial.version>
+		<neo4j.spatial.version>0.9</neo4j.spatial.version>
 		<aspectj.version>1.6.12</aspectj.version>
 	</properties>
 	<repositories>
@@ -56,6 +56,17 @@
 			</snapshots>
 			<releases>
 				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>tinkerpop-snapshot-repository</id>
+			<name>Tinkerpop snapshot repo</name>
+			<url>http://tinkerpop.com/maven2</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
 			</releases>
 		</repository>
 	</repositories>
@@ -219,6 +230,26 @@
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j-spatial</artifactId>
 			<version>${neo4j.spatial.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tinkerpop.gremlin</groupId>
+			<artifactId>gremlin-groovy</artifactId>
+			<version>1.4</version>
+			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<groupId>com.tinkerpop.blueprints</groupId>
+					<artifactId>blueprints-sail-graph</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.groovy.maven</groupId>
+					<artifactId>gmaven-plugin</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jline</groupId>
+					<artifactId>jline</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Junit -->
