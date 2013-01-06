@@ -6,10 +6,8 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,30 +16,16 @@ import com.github.kpacha.mafia.model.Manager;
 import com.github.kpacha.mafia.test.GangsterAbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/gangster-test-context.xml" })
 @Transactional
 public class GangsterRepositoryTest extends GangsterAbstractTest {
 
-    private Gangster tonySoprano;
-    private Gangster paulie;
-    private Gangster soldier;
-
-    @Before
-    public void setUp() throws InterruptedException {
-	tonySoprano = buildGangster();
-	paulie = buildGangster();
-	soldier = buildGangster();
-    }
-
     @Test
-    @Transactional
     public void persistedGangsterShouldBeRetrievableFromGraphDb() {
 	Gangster retrievedGangster = repo.findOne(tonySoprano.getNodeId());
 	assertEqualGangsters(tonySoprano, retrievedGangster);
     }
 
     @Test
-    @Transactional
     public void theGangsterIsOmitedFromItsCollegueList() {
 	Set<Manager> managed = new HashSet<Manager>();
 	managed.add(buildManager(tonySoprano, paulie, true));
@@ -58,7 +42,6 @@ public class GangsterRepositoryTest extends GangsterAbstractTest {
     }
 
     @Test
-    @Transactional
     public void theConvictedAreOmitedFromSubordinateList() {
 	paulie.setOnDuty(false);
 	paulie = repo.save(paulie);
@@ -78,7 +61,6 @@ public class GangsterRepositoryTest extends GangsterAbstractTest {
     }
 
     @Test
-    @Transactional
     public void theConvictedAreOmitedFromBossesList() {
 	paulie.setOnDuty(false);
 	paulie = repo.save(paulie);
@@ -87,7 +69,6 @@ public class GangsterRepositoryTest extends GangsterAbstractTest {
 	managers.add(buildManager(paulie, soldier, false));
 	managers.add(buildManager(tonySoprano, soldier, true));
 	soldier.setManagers(managers);
-
 	soldier = repo.save(soldier);
 
 	Set<Gangster> bosses = repo.getCurrentBoss(soldier);

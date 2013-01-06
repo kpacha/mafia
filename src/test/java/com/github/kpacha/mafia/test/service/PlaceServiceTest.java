@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import com.github.kpacha.mafia.service.PlaceService;
 import com.github.kpacha.mafia.test.PlaceAbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/gangster-test-context.xml" })
 @Transactional
 public class PlaceServiceTest extends PlaceAbstractTest {
 

@@ -3,12 +3,14 @@ package com.github.kpacha.mafia.test;
 import junit.framework.Assert;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.github.kpacha.mafia.model.Gangster;
 import com.github.kpacha.mafia.model.Person;
 import com.github.kpacha.mafia.model.Place;
 import com.github.kpacha.mafia.service.PopulatorService;
 
+@ContextConfiguration({ "/gangster-test-context.xml" })
 public class AbstractTest {
     @Autowired
     private PopulatorService populator;
