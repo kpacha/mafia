@@ -169,7 +169,10 @@ public class GangsterServiceImpl implements GangsterService {
 	log.debug("After the endorsement, the substitutor [" + candidate
 		+ "] has " + substitutor.getManaged().size() + " subordinates");
 	// if the candidate was a subordinate, promote him
-	if (repo.getCurrentBoss(substitutor).isEmpty() && boss != null) {
+	Gangster previousBoss = getBoss(substitutor);
+	if (previousBoss != null
+		&& convicted.getNodeId().equals(previousBoss.getNodeId())
+		&& boss != null) {
 	    log.debug("The substitutor [" + substitutor
 		    + "] was a subordinate. Promoting him!");
 	    repo.save(enroleSubordinate(boss, substitutor));
