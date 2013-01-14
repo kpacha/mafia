@@ -17,11 +17,8 @@
 	<context:spring-configured />
 	<context:component-scan base-package="com.github.kpacha.mafia" />
 
-	<neo4j:config graphDatabaseService="graphDatabaseService" />
 	<neo4j:repositories base-package="com.github.kpacha.mafia.repository" />
-
-	<bean id="graphDatabaseService" class="org.neo4j.test.ImpermanentGraphDatabase"
-		destroy-method="shutdown" />
+	<neo4j:config storeDirectory="target/test-db"/>
 
 	<tx:annotation-driven mode="proxy" />
 </beans>
