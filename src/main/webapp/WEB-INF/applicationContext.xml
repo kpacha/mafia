@@ -21,12 +21,12 @@
 			expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	 
-	<neo4j:config storeDirectory="data/graph.db"/>
-<!-- 	<neo4j:config graphDatabaseService="graphDatabaseService"/> -->
-<!-- 	<bean id="graphDatabaseService"  -->
-<!-- 		class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase"> -->
-<!-- 		<constructor-arg index="0" value="http://localhost:7474/db/data" /> -->
-<!-- 	</bean> -->
+<!-- 	<neo4j:config storeDirectory="data/graph.db"/> -->
+	<neo4j:config graphDatabaseService="graphDatabaseService"/>
+	<bean id="graphDatabaseService" 
+		class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+		<constructor-arg index="0" value="http://localhost:7474/db/data" />
+	</bean>
 	<neo4j:repositories base-package="com.github.kpacha.mafia.repository" />
 	
 	<tx:annotation-driven mode="proxy"/>
