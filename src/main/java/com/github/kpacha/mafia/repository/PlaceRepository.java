@@ -16,7 +16,7 @@ public interface PlaceRepository extends GraphRepository<Place>,
 	NamedIndexRepository<Place>, RelationshipOperationsRepository<Place>,
 	SpatialRepository<Place> {
 
-    @Query("start visitor=node({0}) match visitor-[:VISIT]->place "
+    @Query("start visitor=node({0}) match visitor-[:VISITS]->place "
 	    + " return place, count(*) order by count(*) desc limit 10")
     List<MostVisitedResult> getMostVisitedPlaces(Gangster visitor);
 

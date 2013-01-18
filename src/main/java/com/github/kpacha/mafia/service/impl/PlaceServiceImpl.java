@@ -2,6 +2,7 @@ package com.github.kpacha.mafia.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,11 +40,14 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public Place getPlace(float lon, float lat) {
 	log.debug("Looking for places near [" + lon + "," + lat + "]");
+	Locale defaultLocale = Locale.getDefault();
+	Locale.setDefault(Locale.US);
 	EndResult<Place> candidatePlace = repo.findWithinBoundingBox(
 		"placeLocation", lat - COORDINATE_TOLERANCE, lon
 			- COORDINATE_TOLERANCE, lat + COORDINATE_TOLERANCE, lon
 			+ COORDINATE_TOLERANCE);
 	Place place = candidatePlace.singleOrNull();
+	Locale.setDefault(defaultLocale);
 	if (place == null) {
 	    place = save(buildNewPlace(lon, lat));
 	    log.debug("Created place [" + place.getId() + "/" + place.getName()

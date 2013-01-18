@@ -1,6 +1,5 @@
 package com.github.kpacha.mafia.model;
 
-import java.util.Formatter;
 import java.util.Locale;
 import java.util.Set;
 
@@ -22,14 +21,14 @@ public class Place {
     @Indexed(indexType = IndexType.POINT, indexName = "placeLocation")
     private String wkt;
     @Fetch
-    @RelatedToVia(type = "VISITS", direction = Direction.OUTGOING)
+    @RelatedToVia(type = "VISITS", direction = Direction.INCOMING)
     private Set<Visit> visits;
 
     public void setLocation(float lon, float lat) {
-	StringBuilder stringBuilder = new StringBuilder();
-	Formatter formatter = new Formatter(stringBuilder, Locale.US);
-	formatter.format("POINT( %.2f %.2f )", lon, lat);
-	this.wkt = stringBuilder.substring(0);
+	Locale defaultLocale = Locale.getDefault();
+	Locale.setDefault(Locale.US);
+	this.wkt = String.format("POINT( %.2f %.2f )", lon, lat);
+	Locale.setDefault(defaultLocale);
     }
 
     /**

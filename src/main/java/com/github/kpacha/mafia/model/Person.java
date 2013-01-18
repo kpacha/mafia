@@ -12,9 +12,9 @@ public class Person {
     @Indexed(indexType = IndexType.FULLTEXT, indexName = "person")
     private String name;
     private String comment;
-    @RelatedTo(type = "VISIT", direction = Direction.OUTGOING)
+    @RelatedTo(type = "VISITS", direction = Direction.OUTGOING)
     private Set<Place> visitedPlaces;
-    @RelatedToVia(type = "VISIT", direction = Direction.OUTGOING)
+    @RelatedToVia(type = "VISITS", direction = Direction.OUTGOING)
     private Set<Visit> visites;
 
     /**

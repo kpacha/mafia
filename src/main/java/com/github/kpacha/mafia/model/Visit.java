@@ -7,7 +7,7 @@ import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
-@RelationshipEntity(type = "VISIT")
+@RelationshipEntity(type = "VISITS")
 public class Visit {
     @GraphId
     private Long id;
