@@ -40,9 +40,6 @@ public class GangsterController {
     @RequestMapping(value = "/gangsters/{gangsterId}/visit/{lon}/{lat}/", method = RequestMethod.GET)
     public String saveVisit(final Model model, @PathVariable Long gangsterId,
 	    @PathVariable float lon, @PathVariable float lat) {
-	// Gangster gangster = service.find(gangsterId);
-	// log.debug("Gangster [" + gangster.getNodeId() + "] is visiting "
-	// + place.getWkt() + " [" + place.getName() + "] now!");
 	placeService.visit(gangsterId, lon, lat);
 	return "redirect:/gangsters/" + gangsterId;
     }
