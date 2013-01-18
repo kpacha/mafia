@@ -68,7 +68,7 @@ public class PopulatorServiceImpl implements PopulatorService {
 	    }
 	    if (maxSubordinates > 0) {
 		gangster = gangsterService.save(gangster);
-		gangster.addKnown(subordinates);
+		// gangster.addKnown(subordinates);
 	    }
 	}
 
