@@ -18,6 +18,7 @@
 		<!-- <spring-data-neo4j.version>2.1.0.BUILD-SNAPSHOT</spring-data-neo4j.version> -->
 		<neo4j.spatial.version>0.9</neo4j.spatial.version>
 		<aspectj.version>1.6.12</aspectj.version>
+		<jdk.version>1.7</jdk.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -273,8 +274,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
 				</configuration>
 			</plugin>
 		</plugins>
